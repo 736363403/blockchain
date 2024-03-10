@@ -6,6 +6,7 @@ import com.blockchain.service.AddressMonitoringService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,11 @@ public class AddressMonitoringController {
 
     private static final Logger logger = LogManager.getLogger(AddressMonitoringController.class);
 
+    @Value("${isMonitoring}")
+    boolean isMonitoring;
+
+    @Value("${isCoinMonitoring}")
+    boolean isCoinMonitoring;
 
     @Resource
     private AddressMonitoringService addressMonitoringService;
@@ -27,12 +33,16 @@ public class AddressMonitoringController {
 //    @RequestMapping("/startMonitoring")
     @Scheduled(cron = "0 * * * * ?")
     public void startMonitoring() throws Exception {
-        addressMonitoringService.startMonitoring();
+        if (isMonitoring){
+            addressMonitoringService.startMonitoring();
+        }
     }
 
     @Scheduled(cron = "0 */3 * * * ?")
     public void startCoinMonitoring() throws Exception {
-        addressMonitoringService.startCoinMonitoring();
+        if (isCoinMonitoring){
+            addressMonitoringService.startCoinMonitoring();
+        }
     }
 
 

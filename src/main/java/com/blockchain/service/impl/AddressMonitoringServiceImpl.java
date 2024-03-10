@@ -36,10 +36,19 @@ public class AddressMonitoringServiceImpl implements AddressMonitoringService {
 
     @Value("${API_KEY}")
     private String API_KEY;
+
     @Value("${ADDRESS}")
     private String ADDRESSList;
+
+    @Value("${coinMonitoringAddress}")
+    private String coinMonitoringAddress;
+
+    @Value("${monitoringAddress}")
+    private String monitoringAddress;
+
     @Value("${isProxy}")
     private boolean ISPROXY;
+
     @Value("${proxyPort}")
     private String proxyPort;
 
@@ -177,19 +186,21 @@ public class AddressMonitoringServiceImpl implements AddressMonitoringService {
         }
 
         if (!info.toString().equals("")){
-            Map map = new HashMap<>();
-            map.put("msg",info.toString());
-            map.put("receiver","45199915897@chatroom");
-            // 创建HttpHeaders实例，设置Content-Type为application/json
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            for (String address : coinMonitoringAddress.split(";")) {
+                Map map = new HashMap<>();
+                map.put("msg",info.toString());
+                map.put("receiver",address);
+                // 创建HttpHeaders实例，设置Content-Type为application/json
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // 创建HttpEntity，将User对象和HttpHeaders传入
-            HttpEntity<Map> request = new HttpEntity<>(map, headers);
+                // 创建HttpEntity，将User对象和HttpHeaders传入
+                HttpEntity<Map> request = new HttpEntity<>(map, headers);
 
-            // 发送POST请求，将User对象转为JSON格式
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.exchange("http://103.101.205.46:9999/text", HttpMethod.POST, request, String.class);
+                // 发送POST请求，将User对象转为JSON格式
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.exchange("http://127.0.0.1:9999/text", HttpMethod.POST, request, String.class);
+            }
         }
 
     }
@@ -211,19 +222,21 @@ public class AddressMonitoringServiceImpl implements AddressMonitoringService {
         }
 
         if (!info.toString().equals("")){
-            Map map = new HashMap<>();
-            map.put("msg",info.toString());
-            map.put("receiver","45849287450@chatroom");
-            // 创建HttpHeaders实例，设置Content-Type为application/json
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            for (String address : coinMonitoringAddress.split(";")) {
+                Map map = new HashMap<>();
+                map.put("msg",info.toString());
+                map.put("receiver",address);
+                // 创建HttpHeaders实例，设置Content-Type为application/json
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // 创建HttpEntity，将User对象和HttpHeaders传入
-            HttpEntity<Map> request = new HttpEntity<>(map, headers);
+                // 创建HttpEntity，将User对象和HttpHeaders传入
+                HttpEntity<Map> request = new HttpEntity<>(map, headers);
 
-            // 发送POST请求，将User对象转为JSON格式
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.exchange("http://103.101.205.46:9999/text", HttpMethod.POST, request, String.class);
+                // 发送POST请求，将User对象转为JSON格式
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.exchange("http://103.101.205.46:9999/text", HttpMethod.POST, request, String.class);
+            }
         }
     }
 
